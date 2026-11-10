@@ -196,8 +196,8 @@ impl Session {
             inputTimeStamp: params.input_timestamp,
             codecPicParams: params.codec_params.map(Into::into).unwrap_or_default(),
             pictureType: params.picture_type,
-            // Per-frame pic flags (e.g. `NV_ENC_PIC_FLAG_FORCEIDR`), so a caller
-            // can force a keyframe without recreating the session.
+            // Per-frame pic flags (e.g. `NV_ENC_PIC_FLAG_FORCEIDR`), so a
+            // caller can force a keyframe without recreating the session.
             encodePicFlags: params.encode_pic_flags,
             ..Default::default()
         };
@@ -206,10 +206,10 @@ impl Session {
     }
 
     /// Reconfigure the running encoder without recreating the session, e.g. to
-    /// change the target bitrate (`nvEncReconfigureEncoder`). `init` carries the
-    /// new parameters — typically the same builder used at
-    /// [`Encoder::start_session`](super::encoder::Encoder::start_session) with a
-    /// modified `encode_config`.
+    /// change the target bitrate (`nvEncReconfigureEncoder`). `init` carries
+    /// the new parameters — typically the same builder used at
+    /// [`Encoder::start_session`](super::encoder::Encoder::start_session) with
+    /// a modified `encode_config`.
     ///
     /// # Errors
     ///
@@ -254,7 +254,8 @@ impl Drop for Session {
 }
 
 /// Optional parameters for [`Session::encode_picture`].
-#[allow(missing_debug_implementations)] // CodecPictureParams doesn't implement Debug
+// CodecPictureParams doesn't implement Debug
+#[allow(missing_debug_implementations)]
 pub struct EncodePictureParams {
     /// Opaque data used for identifying the corresponding encoded frame
     pub input_timestamp: u64,
@@ -264,8 +265,8 @@ pub struct EncodePictureParams {
     /// Codec-specific parameters
     pub codec_params: Option<CodecPictureParams>,
     /// Per-frame `NV_ENC_PIC_FLAGS` bitmask, e.g. `NV_ENC_PIC_FLAG_FORCEIDR` to
-    /// force the frame to be an IDR, or `NV_ENC_PIC_FLAG_OUTPUT_SPSPPS` to repeat
-    /// the sequence/picture parameter sets in-band.
+    /// force the frame to be an IDR, or `NV_ENC_PIC_FLAG_OUTPUT_SPSPPS` to
+    /// repeat the sequence/picture parameter sets in-band.
     pub encode_pic_flags: u32,
 }
 
@@ -281,7 +282,8 @@ impl Default for EncodePictureParams {
 }
 
 /// Codec specific picture parameters
-#[allow(missing_debug_implementations)] // NV_ENC_PIC_PARAMS_H264 contains a union, thus doesn't derive Debug
+// NV_ENC_PIC_PARAMS_H264 contains a union, thus doesn't derive Debug
+#[allow(missing_debug_implementations)]
 pub enum CodecPictureParams {
     /// Parameters for H.264
     H264(NV_ENC_PIC_PARAMS_H264),
